@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bag | Thrift & Thread</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <header class="fixed top-0 left-0 right-0 z-50 bg-[#F4EFE8]" id="header-container"></header>
+
+    <div class="max-w-3xl mx-auto px-6 py-12">
+        <h1 class="font-serif text-3xl mb-8">Shopping Bag</h1>
+        
+        <div id="cart-items" class="bg-white p-6 rounded-lg shadow-sm mb-8">
+            <!-- Items injected here -->
+        </div>
+
+        <div class="flex justify-between items-center text-xl font-serif mb-8">
+            <span>Total</span>
+            <span id="cart-total">$0.00</span>
+        </div>
+
+        <a href="checkout.html" class="btn btn-primary w-full text-center no-underline">Proceed to Checkout</a>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thrift & Thread | Curated Luxury</title>
+    
+    <!-- Tailwind CSS (Utility classes) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Header Injection Container -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="header-container"></header>
+
+    <!-- Hero Section -->
+    <section class="relative h-[85vh] flex items-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1920&q=80" alt="Luxury Fashion" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-[#F4EFE8] via-[#F4EFE8]/80 to-transparent"></div>
+        </div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-2">
+            <div class="fade-in">
+                <div class="w-16 h-[2px] bg-[#C9A66B] mb-8"></div>
+                <h1 class="font-serif text-5xl md:text-7xl text-[#2B2B2B] leading-tight mb-6">
+                    Timeless <br>
+                    <span class="text-[#C9A66B]">Elegance</span> <br>
+                    Rediscovered
+                </h1>
+                <p class="text-lg text-[#2B2B2B]/80 mb-8 max-w-md leading-relaxed">
+                    Curated luxury fashion, authenticated and consciously sourced. Each piece carries a story of craftsmanship.
+                </p>
+                <a href="shop.html" class="btn btn-primary no-underline">
+                    Explore Collection
+                    <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Section -->
+    <section class="py-20 max-w-7xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <h2 class="font-serif text-3xl md:text-4xl text-[#2B2B2B] mb-4">The Edit</h2>
+            <div class="w-16 h-[2px] bg-[#C9A66B] mx-auto"></div>
+        </div>
+
+        <!-- Javascript will inject products here -->
+        <div id="featured-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Loading State -->
+            <div class="h-96 bg-gray-100 rounded animate-pulse"></div>
+            <div class="h-96 bg-gray-100 rounded animate-pulse"></div>
+            <div class="h-96 bg-gray-100 rounded animate-pulse"></div>
+        </div>
+    </section>
+
+    <!-- Brand Promise -->
+    <section class="bg-[#2B2B2B] text-white py-16">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-center">
+            <div>
+                <i data-lucide="shield" class="w-8 h-8 text-[#C9A66B] mx-auto mb-4"></i>
+                <h3 class="font-serif text-xl mb-2">Authenticated</h3>
+                <p class="text-gray-400 text-sm">Every piece verified by experts.</p>
+            </div>
+            <div>
+                <i data-lucide="leaf" class="w-8 h-8 text-[#C9A66B] mx-auto mb-4"></i>
+                <h3 class="font-serif text-xl mb-2">Sustainable</h3>
+                <p class="text-gray-400 text-sm">Luxury with a conscience.</p>
+            </div>
+            <div>
+                <i data-lucide="heart" class="w-8 h-8 text-[#C9A66B] mx-auto mb-4"></i>
+                <h3 class="font-serif text-xl mb-2">Curated</h3>
+                <p class="text-gray-400 text-sm">Hand-selected for style.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#2B2B2B] text-white py-8 text-center mt-auto border-t border-gray-700">
+        <p class="text-xs text-gray-500">&copy; 2024 Thrift & Thread. All rights reserved.</p>
+    </footer>
+
+    <!-- Main Logic -->
+    <script src="js/script.js"></script>
+</body>
+</html>

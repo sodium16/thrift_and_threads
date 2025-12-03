@@ -1,0 +1,112 @@
+/* css/style.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cream: #F4EFE8;
+    --sand: #E9E0D4;
+    --gold: #C9A66B;
+    --charcoal: #2B2B2B;
+    --white: #ffffff;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--cream);
+    color: var(--charcoal);
+    margin: 0;
+    padding-top: 80px; /* Space for fixed header */
+}
+
+.font-serif {
+    font-family: 'Playfair Display', serif;
+}
+
+/* Utility Classes */
+.text-gold { color: var(--gold); }
+.bg-gold { background-color: var(--gold); }
+.border-gold { border-color: var(--gold); }
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--charcoal);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--gold);
+}
+
+.btn-outline {
+    border: 1px solid var(--charcoal);
+    color: var(--charcoal);
+    background: transparent;
+}
+
+.btn-outline:hover {
+    background-color: var(--charcoal);
+    color: white;
+}
+
+/* Navbar Links */
+.nav-link {
+    position: relative;
+    text-decoration: none;
+    color: var(--charcoal);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--gold);
+}
+
+/* Header Shadow on Scroll */
+header.scrolled {
+    background-color: rgba(244, 239, 232, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Cart Badge */
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--gold);
+    color: white;
+    font-size: 0.65rem;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Fade In Animation */
+.fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
