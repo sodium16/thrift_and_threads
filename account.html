@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | Thrift & Thread</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="header-container"></header>
+
+    <!-- Auth Loader / Protection Message -->
+    <div id="account-loader" class="min-h-screen flex flex-col items-center justify-center bg-[#F4EFE8]">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C9A66B] mb-4"></div>
+        <p class="text-[#2B2B2B]/60">Verifying account...</p>
+    </div>
+
+    <!-- Main Content (Hidden until auth) -->
+    <div id="account-content" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div class="flex flex-col lg:flex-row gap-12">
+            
+            <!-- Sidebar -->
+            <aside class="lg:w-64 flex-shrink-0">
+                <div class="bg-[#E9E0D4]/30 p-6 mb-6 rounded-lg">
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 bg-[#C9A66B]/20 rounded-full flex items-center justify-center text-[#C9A66B]">
+                            <i data-lucide="user" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-serif text-lg text-[#2B2B2B]" id="user-name">User</h2>
+                            <p class="text-xs text-gray-500 truncate max-w-[120px]" id="user-email">...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="space-y-1">
+                    <button onclick="window.switchTab('orders')" class="w-full flex items-center gap-3 px-4 py-3 text-sm transition-colors bg-[#2B2B2B] text-white rounded" id="tab-btn-orders">
+                        <i data-lucide="package" class="w-4 h-4"></i> My Orders
+                    </button>
+                    <button onclick="window.switchTab('wishlist')" class="w-full flex items-center gap-3 px-4 py-3 text-sm transition-colors hover:bg-[#E9E0D4]/50 rounded text-gray-600" id="tab-btn-wishlist">
+                        <i data-lucide="heart" class="w-4 h-4"></i> Wishlist
+                    </button>
+                    <button onclick="window.switchTab('settings')" class="w-full flex items-center gap-3 px-4 py-3 text-sm transition-colors hover:bg-[#E9E0D4]/50 rounded text-gray-600" id="tab-btn-settings">
+                        <i data-lucide="settings" class="w-4 h-4"></i> Settings
+                    </button>
+                    <button onclick="window.handleLogout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 rounded mt-4">
+                        <i data-lucide="log-out" class="w-4 h-4"></i> Sign Out
+                    </button>
+                </nav>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 min-h-[500px]">
+                
+                <!-- Orders Tab -->
+                <div id="tab-orders" class="tab-content">
+                    <h1 class="font-serif text-2xl mb-8">Order History</h1>
+                    <div id="orders-list" class="space-y-6">
+                        <!-- Injected by JS -->
+                        <div class="text-center py-12 bg-gray-50 rounded-lg">
+                            <p class="text-gray-500">Loading orders...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wishlist Tab -->
+                <div id="tab-wishlist" class="tab-content hidden">
+                    <h1 class="font-serif text-2xl mb-8">My Wishlist</h1>
+                    <div id="wishlist-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="tab-settings" class="tab-content hidden">
+                    <h1 class="font-serif text-2xl mb-8">Account Settings</h1>
+                    <div class="bg-white border border-[#E9E0D4] p-8 rounded-lg max-w-2xl">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-xs text-gray-500 uppercase mb-1">Full Name</label>
+                                <input type="text" id="settings-name" class="w-full border border-[#E9E0D4] p-2 rounded">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-500 uppercase mb-1">Email</label>
+                                <input type="email" id="settings-email" class="w-full border border-[#E9E0D4] p-2 rounded bg-gray-50" disabled>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="alert('Profile updated!')">Save Changes</button>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- IMPORTANT: type="module" needed for Firebase -->
+    <script type="module" src="js/script.js"></script>
+</body>
+</html>

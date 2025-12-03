@@ -9,89 +9,226 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <!-- Simple Header for Checkout (Distraction Free) -->
+    <!-- Checkout Header -->
     <header class="fixed top-0 left-0 right-0 z-50 bg-[#F4EFE8] border-b border-[#E9E0D4] py-4">
-        <div class="max-w-7xl mx-auto px-6 flex justify-center items-center relative">
-            <a href="cart.html" class="absolute left-6 text-sm text-gray-500 hover:text-[#C9A66B] flex items-center">
-                <i data-lucide="chevron-left" class="w-4 h-4 mr-1"></i> Return to Bag
+        <div class="max-w-7xl mx-auto px-6 flex justify-between md:justify-center items-center relative">
+            <a href="cart.html" class="md:absolute md:left-6 text-sm text-gray-500 hover:text-[#C9A66B] flex items-center transition-colors">
+                <i data-lucide="chevron-left" class="w-4 h-4 mr-1"></i> <span class="hidden sm:inline">Return to Bag</span>
             </a>
             <a href="index.html" class="font-serif text-xl tracking-wide text-[#2B2B2B] no-underline">
                 Thrift & Thread
             </a>
-            <div class="absolute right-6 flex items-center text-xs text-gray-400">
-                <i data-lucide="lock" class="w-3 h-3 mr-1"></i> Secure Checkout
+            <div class="md:absolute md:right-6 flex items-center text-xs text-gray-400">
+                <i data-lucide="lock" class="w-3 h-3 mr-1"></i> Secure
             </div>
         </div>
     </header>
 
-    <div class="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-        <!-- Left Column: Forms -->
-        <div class="pt-8">
-            <!-- Breadcrumb Steps -->
-            <div class="flex items-center gap-2 text-sm mb-8">
-                <span class="text-[#C9A66B] font-medium">Information</span>
-                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-300"></i>
-                <span class="text-gray-400">Shipping</span>
-                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-300"></i>
-                <span class="text-gray-400">Payment</span>
-            </div>
-
-            <form onsubmit="event.preventDefault(); alert('Order placed! (Demo)'); localStorage.removeItem('tt_db'); location.href='index.html';">
-                <div class="mb-8">
-                    <h2 class="font-serif text-xl mb-4">Contact Information</h2>
-                    <input type="email" placeholder="Email" class="w-full bg-white border border-[#E9E0D4] p-3 rounded text-sm focus:outline-none focus:border-[#C9A66B] mb-3" required>
-                    <label class="flex items-center gap-2 text-sm text-gray-600">
-                        <input type="checkbox" class="accent-[#C9A66B]"> Email me with news and offers
-                    </label>
-                </div>
-
-                <div class="mb-8">
-                    <h2 class="font-serif text-xl mb-4">Shipping Address</h2>
-                    <div class="grid grid-cols-2 gap-4 mb-4">
-                        <input type="text" placeholder="First name" class="bg-white border border-[#E9E0D4] p-3 rounded text-sm focus:outline-none focus:border-[#C9A66B]" required>
-                        <input type="text" placeholder="Last name" class="bg-white border border-[#E9E0D4] p-3 rounded text-sm focus:outline-none focus:border-[#C9A66B]" required>
-                    </div>
-                    <input type="text" placeholder="Address" class="w-full bg-white border border-[#E9E0D4] p-3 rounded text-sm focus:outline-none focus:border-[#C9A66B] mb-4" required>
-                    <input type="text" placeholder="Apartment, suite, etc. (optional)" class="w-full bg-white border border-[#E9E0D4] p-3 rounded text-sm focus:outline-none focus:border-[#C9A66B] mb-4">
-                    <div class="grid grid-cols-3 gap-4 mb-4">
-                        <input type="text" placeholder="City" class="bg-white border border-[#E9E0D4] p-3 rounded text-sm focus:outline-none focus:border-[#C9A66B]" required>
-                        <input type="text" placeholder="State" class="bg-white border border-[#E9E0D4] p-3 rounded text-sm focus:outline-none focus:border-[#C9A66B]" required>
-                        <input type="text" placeholder="ZIP code" class="bg-white border border-[#E9E0D4] p-3 rounded text-sm focus:outline-none focus:border-[#C9A66B]" required>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary w-full py-4 text-center">Continue to Shipping</button>
-            </form>
-        </div>
-
-        <!-- Right Column: Order Summary -->
-        <div class="bg-[#E9E0D4]/30 p-8 rounded-lg h-fit lg:mt-8">
-            <h2 class="font-serif text-xl mb-6">Order Summary</h2>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
             
-            <!-- Items Injected Here -->
-            <div id="checkout-items" class="space-y-4 mb-6 max-h-80 overflow-y-auto pr-2">
-                <!-- JS will populate this -->
-                <div class="text-center text-gray-500 text-sm">Loading items...</div>
+            <!-- Left Column: Steps & Forms -->
+            <div>
+                <!-- Progress Indicator -->
+                <div class="flex items-center justify-center gap-4 mb-10 text-sm">
+                    <div class="flex items-center gap-2 cursor-pointer" onclick="goToStep(1)">
+                        <span id="step-indicator-1" class="w-6 h-6 rounded-full flex items-center justify-center border border-[#2B2B2B] bg-[#2B2B2B] text-white transition-colors">1</span>
+                        <span id="step-label-1" class="font-medium text-[#2B2B2B]">Information</span>
+                    </div>
+                    <div class="w-8 h-[1px] bg-[#E9E0D4]"></div>
+                    <div class="flex items-center gap-2 pointer-events-none opacity-50" id="step-header-2">
+                        <span id="step-indicator-2" class="w-6 h-6 rounded-full flex items-center justify-center border border-[#2B2B2B] text-[#2B2B2B] transition-colors">2</span>
+                        <span id="step-label-2">Shipping</span>
+                    </div>
+                    <div class="w-8 h-[1px] bg-[#E9E0D4]"></div>
+                    <div class="flex items-center gap-2 pointer-events-none opacity-50" id="step-header-3">
+                        <span id="step-indicator-3" class="w-6 h-6 rounded-full flex items-center justify-center border border-[#2B2B2B] text-[#2B2B2B] transition-colors">3</span>
+                        <span id="step-label-3">Payment</span>
+                    </div>
+                </div>
+
+                <form id="checkout-form" onsubmit="event.preventDefault();">
+                    
+                    <!-- STEP 1: INFORMATION -->
+                    <div id="step-1" class="step-content fade-in">
+                        <div class="mb-8">
+                            <h2 class="font-serif text-xl mb-4 text-[#2B2B2B]">Contact Information</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Email</label>
+                                    <input type="email" name="email" class="w-full bg-white border border-[#E9E0D4] p-3 text-sm focus:outline-none focus:border-[#C9A66B] focus:ring-1 focus:ring-[#C9A66B]" placeholder="your@email.com" required>
+                                </div>
+                                <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                                    <input type="checkbox" class="accent-[#C9A66B]"> Email me with news and offers
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <h2 class="font-serif text-xl mb-4 text-[#2B2B2B]">Shipping Address</h2>
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">First Name</label>
+                                    <input type="text" name="firstName" class="w-full bg-white border border-[#E9E0D4] p-3 text-sm focus:outline-none focus:border-[#C9A66B]" required>
+                                </div>
+                                <div>
+                                    <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Last Name</label>
+                                    <input type="text" name="lastName" class="w-full bg-white border border-[#E9E0D4] p-3 text-sm focus:outline-none focus:border-[#C9A66B]" required>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Address</label>
+                                <input type="text" name="address" class="w-full bg-white border border-[#E9E0D4] p-3 text-sm focus:outline-none focus:border-[#C9A66B]" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Apartment, suite, etc.</label>
+                                <input type="text" name="apartment" class="w-full bg-white border border-[#E9E0D4] p-3 text-sm focus:outline-none focus:border-[#C9A66B]">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">City</label>
+                                    <input type="text" name="city" class="w-full bg-white border border-[#E9E0D4] p-3 text-sm focus:outline-none focus:border-[#C9A66B]" required>
+                                </div>
+                                <div>
+                                    <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">ZIP Code</label>
+                                    <input type="text" name="zip" class="w-full bg-white border border-[#E9E0D4] p-3 text-sm focus:outline-none focus:border-[#C9A66B]" required>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Country</label>
+                                <select name="country" class="w-full bg-white border border-[#E9E0D4] p-3 text-sm focus:outline-none focus:border-[#C9A66B]">
+                                    <option value="US">United States</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="UK">United Kingdom</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="button" onclick="goToStep(2)" class="btn btn-primary px-8 py-3 w-full sm:w-auto">Continue to Shipping</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: SHIPPING METHOD -->
+                    <div id="step-2" class="step-content hidden fade-in">
+                        <div class="border border-[#E9E0D4] rounded-lg p-4 mb-8 bg-white/50 text-sm">
+                            <div class="flex justify-between border-b border-[#E9E0D4] pb-3 mb-3">
+                                <span class="text-gray-500">Contact</span>
+                                <span id="review-email" class="font-medium"></span>
+                                <span class="text-[#C9A66B] cursor-pointer hover:underline" onclick="goToStep(1)">Change</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">Ship to</span>
+                                <span id="review-address" class="font-medium truncate max-w-[200px]"></span>
+                                <span class="text-[#C9A66B] cursor-pointer hover:underline" onclick="goToStep(1)">Change</span>
+                            </div>
+                        </div>
+
+                        <h2 class="font-serif text-xl mb-4 text-[#2B2B2B]">Shipping Method</h2>
+                        
+                        <div class="space-y-4 mb-8">
+                            <label class="flex items-center justify-between border border-[#C9A66B] bg-[#C9A66B]/5 p-4 rounded-lg cursor-pointer transition-colors" id="ship-std-label">
+                                <div class="flex items-center gap-3">
+                                    <input type="radio" name="shippingMethod" value="standard" class="accent-[#C9A66B] w-4 h-4" checked onchange="updateShipping(this.value)">
+                                    <div>
+                                        <p class="font-medium text-sm">Standard Shipping</p>
+                                        <p class="text-xs text-gray-500">5-7 business days</p>
+                                    </div>
+                                </div>
+                                <span class="font-medium text-sm" id="std-price-display">$15.00</span>
+                            </label>
+
+                            <label class="flex items-center justify-between border border-[#E9E0D4] p-4 rounded-lg cursor-pointer hover:border-[#C9A66B] transition-colors" id="ship-exp-label">
+                                <div class="flex items-center gap-3">
+                                    <input type="radio" name="shippingMethod" value="express" class="accent-[#C9A66B] w-4 h-4" onchange="updateShipping(this.value)">
+                                    <div>
+                                        <p class="font-medium text-sm">Express Shipping</p>
+                                        <p class="text-xs text-gray-500">2-3 business days</p>
+                                    </div>
+                                </div>
+                                <span class="font-medium text-sm">$25.00</span>
+                            </label>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <button type="button" onclick="goToStep(1)" class="btn btn-outline flex-1">Back</button>
+                            <button type="button" onclick="goToStep(3)" class="btn btn-primary flex-1">Continue to Payment</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: PAYMENT -->
+                    <div id="step-3" class="step-content hidden fade-in">
+                        <h2 class="font-serif text-xl mb-4 text-[#2B2B2B]">Payment</h2>
+                        <p class="text-sm text-gray-500 mb-6">All transactions are secure and encrypted.</p>
+
+                        <div class="border border-[#E9E0D4] rounded-lg overflow-hidden mb-8">
+                            <div class="bg-[#F9F9F9] p-4 border-b border-[#E9E0D4] flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <input type="radio" name="payment" checked class="accent-[#C9A66B]">
+                                    <span class="font-medium text-sm">Credit Card</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <i data-lucide="credit-card" class="w-5 h-5 text-gray-400"></i>
+                                </div>
+                            </div>
+                            <div class="p-6 bg-white space-y-4">
+                                <input type="text" placeholder="Card number" class="w-full bg-white border border-[#E9E0D4] p-3 text-sm focus:outline-none focus:border-[#C9A66B]">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <input type="text" placeholder="Name on card" class="w-full bg-white border border-[#E9E0D4] p-3 text-sm focus:outline-none focus:border-[#C9A66B]">
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <input type="text" placeholder="MM / YY" class="w-full bg-white border border-[#E9E0D4] p-3 text-sm focus:outline-none focus:border-[#C9A66B]">
+                                        <input type="text" placeholder="CVV" class="w-full bg-white border border-[#E9E0D4] p-3 text-sm focus:outline-none focus:border-[#C9A66B]">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <button type="button" onclick="goToStep(2)" class="btn btn-outline flex-1">Back</button>
+                            <button type="button" onclick="placeOrder()" class="btn btn-primary flex-1" id="pay-button">Pay Now</button>
+                        </div>
+                    </div>
+
+                </form>
             </div>
 
-            <div class="border-t border-[#E9E0D4] pt-4 space-y-2 text-sm text-gray-600">
-                <div class="flex justify-between">
-                    <span>Subtotal</span>
-                    <span id="checkout-subtotal">$0.00</span>
-                </div>
-                <div class="flex justify-between">
-                    <span>Shipping</span>
-                    <span class="text-green-600">Calculated at next step</span>
-                </div>
-            </div>
+            <!-- Right Column: Summary -->
+            <div class="lg:sticky lg:top-32 h-fit order-first lg:order-last mb-8 lg:mb-0">
+                <div class="bg-[#E9E0D4]/30 p-6 rounded-lg">
+                    <h2 class="font-serif text-xl mb-6 text-[#2B2B2B]">Order Summary</h2>
+                    
+                    <!-- Scrollable Items -->
+                    <div id="checkout-items" class="space-y-4 mb-6 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                        <!-- Items injected via JS -->
+                    </div>
 
-            <div class="border-t border-[#E9E0D4] mt-4 pt-4 flex justify-between items-center">
-                <span class="font-serif text-lg">Total</span>
-                <span class="font-serif text-xl" id="checkout-total">$0.00</span>
+                    <div class="border-t border-[#E9E0D4] pt-4 space-y-3 text-sm text-gray-600">
+                        <div class="flex justify-between">
+                            <span>Subtotal</span>
+                            <span id="checkout-subtotal" class="font-medium">$0.00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Shipping</span>
+                            <span id="checkout-shipping" class="text-xs uppercase tracking-wide">Calculated next step</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Estimated Tax</span>
+                            <span id="checkout-tax">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-[#2B2B2B] mt-4 pt-4 flex justify-between items-center">
+                        <span class="font-serif text-lg text-[#2B2B2B]">Total</span>
+                        <div class="text-right">
+                            <span class="text-xs text-gray-500 block">USD</span>
+                            <span class="font-serif text-2xl text-[#2B2B2B]" id="checkout-total">$0.00</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="js/script.js"></script>
+    <script type="module" src="js/script.js"></script>
 </body>
 </html>

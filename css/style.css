@@ -110,3 +110,154 @@ header.scrolled {
         transform: translateY(0);
     }
 }
+
+.filter-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 300px;
+    background-color: var(--cream);
+    z-index: 60;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    overflow-y: auto;
+}
+
+.filter-drawer.open {
+    transform: translateX(0);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 55;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Custom Range Slider Styling */
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: var(--charcoal);
+    cursor: pointer;
+    margin-top: -6px;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: var(--sand);
+    border-radius: 2px;
+}
+
+/* Active State for Buttons */
+.btn-icon.active {
+    background-color: var(--charcoal);
+    color: white;
+}
+
+.gallery-thumb {
+    opacity: 0.6;
+    transition: opacity 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.gallery-thumb.active {
+    opacity: 1;
+    border-color: var(--gold);
+}
+
+.gallery-thumb:hover {
+    opacity: 1;
+}
+
+/* Size Selector */
+.size-btn {
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--sand);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: transparent;
+}
+
+.size-btn:hover {
+    border-color: var(--gold);
+}
+
+.size-btn.selected {
+    background-color: var(--charcoal);
+    color: white;
+    border-color: var(--charcoal);
+}
+
+.size-btn.disabled {
+    color: #ccc;
+    border-color: #eee;
+    cursor: not-allowed;
+    background-color: #f9f9f9;
+}
+
+/* Zoom Modal */
+.zoom-modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(244, 239, 232, 0.98);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.zoom-modal.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: var(--charcoal);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    z-index: 100;
+    transform: translateY(100px);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toast.show {
+    transform: translateY(0);
+}

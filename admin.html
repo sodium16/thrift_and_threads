@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Thrift & Thread</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js for simple stats visualisation if needed later, usually overkill for vanilla demo -->
+</head>
+<body class="bg-gray-50">
+    
+    <div class="flex min-h-screen">
+        <!-- Admin Sidebar -->
+        <aside class="w-64 bg-[#2B2B2B] text-white fixed h-full overflow-y-auto">
+            <div class="p-6 border-b border-gray-700">
+                <h1 class="font-serif text-xl">Thrift & Thread</h1>
+                <p class="text-xs text-gray-400 mt-1">Admin Panel</p>
+            </div>
+            <nav class="p-4 space-y-2">
+                <button onclick="switchAdminTab('overview')" class="w-full flex items-center gap-3 px-4 py-3 text-sm rounded bg-[#C9A66B] text-white" id="admin-btn-overview">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Overview
+                </button>
+                <button onclick="switchAdminTab('products')" class="w-full flex items-center gap-3 px-4 py-3 text-sm rounded text-gray-300 hover:bg-white/10" id="admin-btn-products">
+                    <i data-lucide="package" class="w-4 h-4"></i> Products
+                </button>
+                <button onclick="switchAdminTab('orders')" class="w-full flex items-center gap-3 px-4 py-3 text-sm rounded text-gray-300 hover:bg-white/10" id="admin-btn-orders">
+                    <i data-lucide="shopping-cart" class="w-4 h-4"></i> Orders
+                </button>
+                <button onclick="location.href='index.html'" class="w-full flex items-center gap-3 px-4 py-3 text-sm rounded text-gray-300 hover:bg-white/10 mt-8">
+                    <i data-lucide="eye" class="w-4 h-4"></i> View Store
+                </button>
+                <button onclick="auth.logout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm rounded text-red-400 hover:bg-red-900/20">
+                    <i data-lucide="log-out" class="w-4 h-4"></i> Logout
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 ml-64 p-8">
+            
+            <!-- Overview Tab -->
+            <div id="admin-overview" class="admin-tab">
+                <h1 class="text-2xl font-bold text-gray-800 mb-8 font-serif">Dashboard Overview</h1>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-gray-500 text-sm">Total Revenue</span>
+                            <span class="p-2 bg-green-100 text-green-600 rounded-lg"><i data-lucide="dollar-sign" class="w-4 h-4"></i></span>
+                        </div>
+                        <p class="text-2xl font-bold" id="stat-revenue">$0</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-gray-500 text-sm">Total Orders</span>
+                            <span class="p-2 bg-purple-100 text-purple-600 rounded-lg"><i data-lucide="shopping-bag" class="w-4 h-4"></i></span>
+                        </div>
+                        <p class="text-2xl font-bold" id="stat-orders">0</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-gray-500 text-sm">Total Products</span>
+                            <span class="p-2 bg-blue-100 text-blue-600 rounded-lg"><i data-lucide="package" class="w-4 h-4"></i></span>
+                        </div>
+                        <p class="text-2xl font-bold" id="stat-products">0</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-6 border-b border-gray-100">
+                        <h2 class="font-bold text-gray-800">Recent Orders</h2>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-gray-50 text-gray-500 uppercase">
+                                <tr>
+                                    <th class="px-6 py-3">Order ID</th>
+                                    <th class="px-6 py-3">Customer</th>
+                                    <th class="px-6 py-3">Status</th>
+                                    <th class="px-6 py-3">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-orders-table">
+                                <!-- Injected JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Tab -->
+            <div id="admin-products" class="admin-tab hidden">
+                <div class="flex justify-between items-center mb-8">
+                    <h1 class="text-2xl font-bold text-gray-800 font-serif">Products</h1>
+                    <button class="bg-[#2B2B2B] text-white px-4 py-2 rounded text-sm hover:bg-[#C9A66B]" onclick="alert('Feature coming soon')">
+                        + Add Product
+                    </button>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-gray-50 text-gray-500 uppercase">
+                            <tr>
+                                <th class="px-6 py-3">Product</th>
+                                <th class="px-6 py-3">Category</th>
+                                <th class="px-6 py-3">Price</th>
+                                <th class="px-6 py-3">Status</th>
+                                <th class="px-6 py-3 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-products-table">
+                            <!-- Injected JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div id="admin-orders" class="admin-tab hidden">
+                <h1 class="text-2xl font-bold text-gray-800 font-serif mb-8">All Orders</h1>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-gray-50 text-gray-500 uppercase">
+                            <tr>
+                                <th class="px-6 py-3">Order ID</th>
+                                <th class="px-6 py-3">Date</th>
+                                <th class="px-6 py-3">Customer</th>
+                                <th class="px-6 py-3">Status</th>
+                                <th class="px-6 py-3">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-orders-table">
+                            <!-- Injected JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script type="module" src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist | Thrift & Thread</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="header-container"></header>
+
+    <!-- Empty State -->
+    <div id="empty-wishlist" class="hidden min-h-screen bg-[#F4EFE8] flex items-center justify-center py-20">
+        <div class="max-w-2xl mx-auto px-6 text-center">
+            <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-full bg-[#E9E0D4]">
+                <i data-lucide="heart" class="w-8 h-8 text-[#C9A66B]"></i>
+            </div>
+            <h1 class="font-serif text-3xl text-[#2B2B2B] mb-4">Your Wishlist is Empty</h1>
+            <p class="text-[#2B2B2B]/60 mb-8">
+                Save pieces you love to your wishlist and shop them later.
+            </p>
+            <a href="shop.html" class="btn btn-primary no-underline inline-flex items-center">
+                Explore Collection <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="wishlist-content" class="min-h-screen pt-20">
+        <div class="bg-[#E9E0D4]/50 py-12">
+            <div class="max-w-7xl mx-auto px-6">
+                <h1 class="font-serif text-3xl text-[#2B2B2B]">My Wishlist</h1>
+                <p class="text-[#2B2B2B]/60 mt-1" id="wishlist-count">Loading...</p>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 py-12">
+            <div id="wishlist-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Items injected here by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Item added to bag</div>
+
+    <script type="module" src="js/script.js"></script>
+</body>
+</html>

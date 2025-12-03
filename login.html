@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | Thrift & Thread</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <header class="fixed top-0 left-0 right-0 z-50 bg-[#F4EFE8] border-b border-[#E9E0D4] py-4">
+        <div class="max-w-7xl mx-auto px-6 text-center relative">
+            <a href="index.html" class="absolute left-0 text-sm text-gray-500 hover:text-[#C9A66B] flex items-center transition-colors">
+                <i data-lucide="arrow-left" class="w-4 h-4 mr-1"></i> Back to Store
+            </a>
+            <a href="index.html" class="font-serif text-xl tracking-wide text-[#2B2B2B] no-underline">
+                Thrift & Thread
+            </a>
+        </div>
+    </header>
+
+    <div class="min-h-screen flex items-center justify-center px-4 py-20">
+        <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-sm border border-[#E9E0D4] fade-in">
+            <div class="text-center mb-8">
+                <h1 class="font-serif text-3xl text-[#2B2B2B] mb-2" id="auth-title">Welcome Back</h1>
+                <p class="text-[#2B2B2B]/60" id="auth-subtitle">Sign in to access your account</p>
+            </div>
+
+            <form id="auth-form">
+                <div id="name-field" class="hidden mb-4">
+                    <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Full Name</label>
+                    <input type="text" id="input-name" class="w-full bg-[#F9F9F9] border border-[#E9E0D4] p-3 text-sm focus:outline-none focus:border-[#C9A66B]">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Email</label>
+                    <input type="email" id="input-email" class="w-full bg-[#F9F9F9] border border-[#E9E0D4] p-3 text-sm focus:outline-none focus:border-[#C9A66B]" required>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Password</label>
+                    <input type="password" id="input-password" class="w-full bg-[#F9F9F9] border border-[#E9E0D4] p-3 text-sm focus:outline-none focus:border-[#C9A66B]" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-full py-3 mb-4" id="submit-btn">Sign In</button>
+            </form>
+
+            <div class="text-center text-sm text-gray-500">
+                <span id="toggle-text">Don't have an account?</span>
+                <button onclick="toggleAuthMode()" class="text-[#C9A66B] underline hover:text-[#2B2B2B] ml-1" id="toggle-btn">Create one</button>
+            </div>
+            
+            
+        </div>
+    </div>
+
+    <script type="module" src="js/script.js"></script>
+</body>
+</html>

@@ -3,58 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product | Thrift & Thread</title>
+    <title>Product Details | Thrift & Thread</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <header class="fixed top-0 left-0 right-0 z-50 bg-[#F4EFE8]" id="header-container"></header>
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="header-container"></header>
 
-    <div class="max-w-7xl mx-auto px-6 py-12" id="product-detail">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <!-- Image Side -->
-            <div>
-                <div class="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
-                    <img id="p-image" src="" alt="Product" class="w-full h-full object-cover">
+    <!-- Zoom Modal -->
+    <div id="zoom-modal" class="zoom-modal">
+        <button onclick="closeZoom()" class="absolute top-6 right-6 p-2 hover:text-[#C9A66B]">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <button onclick="prevImage(event)" class="absolute left-8 p-4 bg-white/80 rounded-full hover:bg-white transition-colors">
+            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+        </button>
+        <img id="zoom-image" src="" alt="Zoomed Product" class="max-w-[90%] max-h-[90vh] object-contain">
+        <button onclick="nextImage(event)" class="absolute right-8 p-4 bg-white/80 rounded-full hover:bg-white transition-colors">
+            <i data-lucide="chevron-right" class="w-6 h-6"></i>
+        </button>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="max-w-7xl mx-auto px-6 pt-24 pb-4">
+        <nav class="text-sm text-gray-500 flex gap-2">
+            <a href="index.html" class="hover:text-[#C9A66B]">Home</a> /
+            <a href="shop.html" class="hover:text-[#C9A66B]">Shop</a> /
+            <span id="breadcrumb-category" class="capitalize hover:text-[#C9A66B] cursor-pointer"></span> /
+            <span id="breadcrumb-name" class="text-[#2B2B2B]"></span>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-6 pb-20">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+            
+            <!-- Gallery Section -->
+            <div class="space-y-4">
+                <div class="relative aspect-[3/4] bg-[#E9E0D4] overflow-hidden group cursor-zoom-in" onclick="openZoom()">
+                    <img id="main-image" src="" alt="Product" class="w-full h-full object-cover transition-opacity duration-300">
+                    
+                    <!-- Condition Badge -->
+                    <span id="condition-badge" class="absolute top-4 left-4 bg-[#C9A66B] text-white text-xs px-3 py-1 uppercase tracking-wider hidden">
+                        Pristine Condition
+                    </span>
+
+                    <!-- Nav Arrows -->
+                    <button onclick="prevImage(event)" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="nextImage(event)" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <!-- Thumbnails -->
+                <div id="gallery-thumbnails" class="grid grid-cols-4 gap-4">
+                    <!-- Injected by JS -->
                 </div>
             </div>
 
-            <!-- Info Side -->
-            <div>
-                <p id="p-brand" class="text-[#C9A66B] tracking-widest text-sm uppercase mb-2"></p>
-                <h1 id="p-title" class="font-serif text-4xl mb-4 text-[#2B2B2B]"></h1>
-                
+            <!-- Details Section -->
+            <div class="lg:py-8">
+                <p id="p-brand" class="text-sm tracking-[0.2em] uppercase text-[#C9A66B] mb-2"></p>
+                <h1 id="p-title" class="font-serif text-3xl lg:text-4xl text-[#2B2B2B] mb-4"></h1>
+
                 <div class="flex items-baseline gap-4 mb-6">
                     <span id="p-price" class="text-2xl font-medium"></span>
                     <span id="p-original" class="text-lg text-gray-400 line-through"></span>
-                </div>
-
-                <div class="border-t border-b border-[#E9E0D4] py-4 mb-6">
-                    <div class="flex justify-between text-sm">
-                        <span class="text-gray-500">Condition</span>
-                        <span id="p-condition" class="font-medium"></span>
-                    </div>
+                    <span id="p-savings" class="text-sm text-[#C9A66B]"></span>
                 </div>
 
                 <p id="p-desc" class="text-gray-600 leading-relaxed mb-8"></p>
 
-                <button id="add-to-cart" class="btn btn-primary w-full py-4 text-sm tracking-widest">
-                    Add to Bag
-                </button>
-
-                <div class="mt-8 space-y-3 text-sm text-gray-500">
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="shield" class="w-4 h-4 text-[#C9A66B]"></i> Authenticity Guaranteed
+                <!-- Product Attributes -->
+                <div class="grid grid-cols-2 gap-4 mb-8 text-sm border-t border-b border-[#E9E0D4] py-6">
+                    <div>
+                        <span class="text-gray-400 block mb-1">Condition</span>
+                        <span id="p-condition" class="font-medium capitalize"></span>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="truck" class="w-4 h-4 text-[#C9A66B]"></i> Free shipping over $250
+                    <div>
+                        <span class="text-gray-400 block mb-1">Color</span>
+                        <div class="flex items-center gap-2">
+                            <span class="font-medium">Camel</span> <!-- Hardcoded for demo, or dynamic -->
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-gray-400 block mb-1">Category</span>
+                        <span id="p-category" class="font-medium capitalize"></span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400 block mb-1">Original Size</span>
+                        <span id="p-size-orig" class="font-medium"></span>
+                    </div>
+                </div>
+
+                <!-- Size Selector -->
+                <div class="mb-8">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-sm font-medium">Select Size</span>
+                        <button class="text-sm text-gray-500 underline hover:text-[#C9A66B]">Size Guide</button>
+                    </div>
+                    <div id="size-selector" class="flex flex-wrap gap-3">
+                        <!-- Sizes injected by JS -->
+                    </div>
+                    <p class="text-xs text-gray-400 mt-2">Only size <span id="p-size-avail"></span> available for this unique piece.</p>
+                </div>
+
+                <!-- Actions -->
+                <div class="space-y-3 mb-8">
+                    <button id="add-to-cart-btn" class="btn btn-primary w-full h-14 tracking-widest text-sm" onclick="addToCart()">
+                        Add to Bag
+                    </button>
+                    <button class="btn btn-outline w-full h-14 tracking-widest text-sm" onclick="toggleWishlist()">
+                        <i data-lucide="heart" class="w-4 h-4 mr-2"></i> Add to Wishlist
+                    </button>
+                </div>
+
+                <!-- Trust Badges -->
+                <div class="space-y-4 pt-4">
+                    <div class="flex items-center gap-3 text-sm text-gray-600">
+                        <i data-lucide="shield" class="w-5 h-5 text-[#C9A66B]"></i>
+                        <span>Authenticity guaranteed</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-gray-600">
+                        <i data-lucide="truck" class="w-5 h-5 text-[#C9A66B]"></i>
+                        <span>Complimentary shipping on orders over $250</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-gray-600">
+                        <i data-lucide="rotate-ccw" class="w-5 h-5 text-[#C9A66B]"></i>
+                        <span>14-day returns accepted</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="js/script.js"></script>
+    <!-- Toast Notification Container -->
+    <div id="toast" class="toast">Added to your bag</div>
+
+    <script type="module" src="js/script.js"></script>
 </body>
 </html>

@@ -3,29 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bag | Thrift & Thread</title>
+    <title>Shopping Bag | Thrift & Thread</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <header class="fixed top-0 left-0 right-0 z-50 bg-[#F4EFE8]" id="header-container"></header>
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="header-container"></header>
 
-    <div class="max-w-3xl mx-auto px-6 py-12">
-        <h1 class="font-serif text-3xl mb-8">Shopping Bag</h1>
-        
-        <div id="cart-items" class="bg-white p-6 rounded-lg shadow-sm mb-8">
-            <!-- Items injected here -->
+    <!-- Empty State (Hidden by default) -->
+    <div id="empty-cart-state" class="hidden min-h-screen bg-[#F4EFE8] flex items-center justify-center py-20">
+        <div class="max-w-2xl mx-auto px-6 text-center">
+            <i data-lucide="shopping-bag" class="w-16 h-16 text-[#C9A66B] mx-auto mb-6"></i>
+            <h1 class="font-serif text-3xl text-[#2B2B2B] mb-4">Your Bag is Empty</h1>
+            <p class="text-[#2B2B2B]/60 mb-8">
+                Discover our curated collection of pre-loved luxury pieces.
+            </p>
+            <a href="shop.html" class="btn btn-primary no-underline inline-flex items-center">
+                Continue Shopping <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+            </a>
         </div>
-
-        <div class="flex justify-between items-center text-xl font-serif mb-8">
-            <span>Total</span>
-            <span id="cart-total">$0.00</span>
-        </div>
-
-        <a href="checkout.html" class="btn btn-primary w-full text-center no-underline">Proceed to Checkout</a>
     </div>
 
-    <script src="js/script.js"></script>
+    <!-- Main Cart Content -->
+    <div id="cart-content" class="min-h-screen pt-20">
+        <!-- Cart Header -->
+        <div class="bg-[#E9E0D4]/50 py-8">
+            <div class="max-w-7xl mx-auto px-6">
+                <a href="shop.html" class="inline-flex items-center text-sm text-[#2B2B2B]/60 hover:text-[#C9A66B] mb-4 no-underline">
+                    <i data-lucide="chevron-left" class="w-4 h-4 mr-1"></i> Continue Shopping
+                </a>
+                <h1 class="font-serif text-3xl text-[#2B2B2B]">Shopping Bag</h1>
+                <p class="text-[#2B2B2B]/60 mt-1" id="cart-header-count">Loading...</p>
+            </div>
+        </div>
+
+        <!-- Free Shipping Progress -->
+        <div id="shipping-progress-container" class="max-w-7xl mx-auto px-6 py-4 hidden">
+            <div class="bg-white rounded-lg p-4 shadow-sm">
+                <div class="flex items-center gap-3 mb-2">
+                    <i data-lucide="truck" class="w-5 h-5 text-[#C9A66B]"></i>
+                    <span class="text-sm" id="shipping-message">
+                        <!-- Injected by JS -->
+                    </span>
+                </div>
+                <div class="w-full bg-[#E9E0D4] rounded-full h-2">
+                    <div id="shipping-bar" class="bg-[#C9A66B] h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <div class="grid lg:grid-cols-3 gap-12">
+                
+                <!-- Cart Items List -->
+                <div class="lg:col-span-2 space-y-6" id="cart-items-list">
+                    <!-- Items injected here -->
+                </div>
+
+                <!-- Order Summary -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-lg p-6 sticky top-32 shadow-sm">
+                        <h2 class="font-serif text-xl text-[#2B2B2B] mb-6">Order Summary</h2>
+
+                        <!-- Promo Code -->
+                        <div class="mb-6">
+                            <label class="text-sm text-gray-600 mb-2 block">Promo Code</label>
+                            <div class="flex gap-2">
+                                <input type="text" placeholder="Enter code" class="flex-1 bg-transparent border border-[#E9E0D4] px-3 py-2 text-sm focus:outline-none focus:border-[#C9A66B] rounded">
+                                <button class="btn btn-outline py-2 px-4 text-sm">Apply</button>
+                            </div>
+                        </div>
+
+                        <div class="w-full h-[1px] bg-[#E9E0D4] mb-6"></div>
+
+                        <!-- Totals -->
+                        <div class="space-y-3 mb-6">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-600">Subtotal</span>
+                                <span id="summary-subtotal">$0.00</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-600">Shipping</span>
+                                <span id="summary-shipping">Calculated at checkout</span>
+                            </div>
+                            <div class="w-full h-[1px] bg-[#E9E0D4]"></div>
+                            <div class="flex justify-between font-medium text-lg">
+                                <span>Total</span>
+                                <span id="summary-total">$0.00</span>
+                            </div>
+                        </div>
+
+                        <a href="checkout.html" class="btn btn-primary w-full py-4 text-center no-underline flex items-center justify-center">
+                            Proceed to Checkout <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                        </a>
+
+                        <!-- Trust Message -->
+                        <div class="mt-6 flex items-center justify-center gap-2 text-sm text-gray-500">
+                            <i data-lucide="gift" class="w-4 h-4 text-[#C9A66B]"></i>
+                            <span>Gift wrapping available at checkout</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/script.js"></script>
 </body>
 </html>
